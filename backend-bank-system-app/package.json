@@ -1,8 +1,8 @@
 {
   "name": "backend-bank-system-app",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Bank Saving System Backend API",
+  "author": "Haris Fadhilah",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
