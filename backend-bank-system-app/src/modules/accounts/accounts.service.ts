@@ -127,23 +127,36 @@ export class AccountsService {
     updateAccountDto: UpdateAccountDto,
   ): Promise<Account> {
     try {
-      // Check if account exists
-      const account = await this.findOne(id);
+      // 1. Check if account exists
+      const account = await this.accountRepository.findOne({
+        where: { id },
+        relations: ['customer', 'depositoType'],
+      });
 
-      // If updating deposito type, verify it exists
+      if (!account) {
+        throw new NotFoundException(`Account with ID ${id} not found`);
+      }
+
+      // 2. Handle Packet update
+      if (updateAccountDto.packet) {
+        account.packet = updateAccountDto.packet;
+      }
+
+      // 3. Handle DepositoType update
       if (updateAccountDto.depositoTypeId) {
         const depositoType = await this.depositoTypeRepository.findOne({
           where: { id: updateAccountDto.depositoTypeId },
         });
+
         if (!depositoType) {
           throw new NotFoundException(
             `Deposito type with ID ${updateAccountDto.depositoTypeId} not found`,
           );
         }
+        account.depositoType = depositoType;
+        account.depositoTypeId = updateAccountDto.depositoTypeId;
       }
 
-      // Update the account (customerId cannot be changed per DTO definition)
-      Object.assign(account, updateAccountDto);
       await this.accountRepository.save(account);
 
       this.logger.log(`Account updated: ${id}`);

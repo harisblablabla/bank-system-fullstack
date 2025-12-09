@@ -61,6 +61,7 @@ export class DepositoTypesService {
   async findAll(): Promise<DepositoType[]> {
     try {
       return await this.depositoTypeRepository.find({
+        relations: ['accounts'],
         order: { yearlyReturn: 'ASC' },
       });
     } catch (error) {

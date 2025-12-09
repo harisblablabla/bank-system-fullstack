@@ -99,10 +99,21 @@ export class TransactionsService {
     await queryRunner.startTransaction();
 
     try {
-      // Get account with deposito type, locked to prevent race conditions
-      const account = await queryRunner.manager.findOne(Account, {
+      //get account with deposito type
+      const accountWithRelations = await queryRunner.manager.findOne(Account, {
         where: { id: withdrawDto.accountId },
         relations: ['depositoType'],
+      });
+
+      if (!accountWithRelations) {
+        throw new NotFoundException(
+          `Account with ID ${withdrawDto.accountId} not found`,
+        );
+      }
+
+      //lock the account for update (without relations to avoid outer join issue)
+      const account = await queryRunner.manager.findOne(Account, {
+        where: { id: withdrawDto.accountId },
         lock: { mode: 'pessimistic_write' },
       });
 
@@ -138,7 +149,7 @@ export class TransactionsService {
       if (lastDeposit) {
         const calculation = InterestCalculator.calculateWithdrawalInterest(
           currentBalance,
-          Number(account.depositoType.yearlyReturn),
+          Number(accountWithRelations.depositoType.yearlyReturn),
           lastDeposit.transactionDate,
           new Date(withdrawDto.transactionDate),
         );
