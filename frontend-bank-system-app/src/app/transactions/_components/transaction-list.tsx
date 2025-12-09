@@ -66,25 +66,35 @@ export function TransactionList({ transactions, loading }: TransactionListProps)
                   className={`font-bold ${
                     transaction.type === 'DEPOSIT' ? 'text-green-600' : 'text-red-600'
                   }`}
+                  suppressHydrationWarning
                 >
                   {transaction.type === 'DEPOSIT' ? '+' : '-'}
                   {formatCurrency(transaction.amount)}
                 </div>
               </TableCell>
               <TableCell>
-                <div className="text-sm text-gray-600">
+                <div
+                  className="text-sm text-gray-600"
+                  suppressHydrationWarning
+                >
                   {formatCurrency(transaction.balanceBefore)}
                 </div>
               </TableCell>
               <TableCell>
-                <div className="text-sm font-medium text-gray-900">
+                <div
+                  className="text-sm font-medium text-gray-900"
+                  suppressHydrationWarning
+                >
                   {formatCurrency(transaction.balanceAfter)}
                 </div>
               </TableCell>
               <TableCell>
                 {transaction.type === 'WITHDRAWAL' && transaction.monthsHeld > 0 ? (
                   <div className="text-sm">
-                    <div className="text-blue-600 font-medium">
+                    <div
+                      className="text-blue-600 font-medium"
+                      suppressHydrationWarning
+                    >
                       +{formatCurrency(transaction.interestEarned)}
                     </div>
                     <div className="text-xs text-gray-500">
@@ -96,7 +106,10 @@ export function TransactionList({ transactions, loading }: TransactionListProps)
                 )}
               </TableCell>
               <TableCell>
-                <div className="text-sm text-gray-600">
+                <div
+                  className="text-sm text-gray-600"
+                  suppressHydrationWarning
+                >
                   {formatDate(transaction.transactionDate)}
                 </div>
               </TableCell>

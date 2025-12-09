@@ -13,8 +13,9 @@ interface TransactionsViewProps {
   accounts: Account[];
 }
 
-export function TransactionsView({ initialTransactions, accounts }: TransactionsViewProps) {
+export function TransactionsView({ initialTransactions, accounts: initialAccounts }: TransactionsViewProps) {
   const [transactions, setTransactions] = useState<Transaction[]>(initialTransactions);
+  const [accounts, setAccounts] = useState<Account[]>(initialAccounts);
   const [isDepositOpen, setIsDepositOpen] = useState(false);
   const [isWithdrawOpen, setIsWithdrawOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -32,14 +33,31 @@ export function TransactionsView({ initialTransactions, accounts }: Transactions
     }
   };
 
-  const handleDepositSuccess = () => {
-    setIsDepositOpen(false);
-    refreshTransactions();
+  const refreshAccounts = async () => {
+    try {
+      const data = await apiClient.getAccounts();
+      setAccounts(data);
+    } catch (error) {
+      console.error('Failed to refresh accounts:', error);
+    }
   };
 
-  const handleWithdrawSuccess = () => {
+  const handleDepositSuccess = async () => {
+    setIsDepositOpen(false);
+    await refreshAccounts();
+    await refreshTransactions();
+  };
+
+  const handleWithdrawSuccess = async () => {
     setIsWithdrawOpen(false);
-    refreshTransactions();
+    await refreshAccounts();
+    await refreshTransactions();
+  };
+
+  const handleOpenWithdraw = async () => {
+    // Refresh accounts before opening withdraw modal
+    await refreshAccounts();
+    setIsWithdrawOpen(true);
   };
 
   const handleFilterChange = (accountId: string) => {
@@ -58,7 +76,7 @@ export function TransactionsView({ initialTransactions, accounts }: Transactions
           <Button variant="success" onClick={() => setIsDepositOpen(true)}>
             + Deposit
           </Button>
-          <Button variant="secondary" onClick={() => setIsWithdrawOpen(true)}>
+          <Button variant="secondary" onClick={handleOpenWithdraw}>
             ↑ Withdraw
           </Button>
         </div>

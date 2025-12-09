@@ -63,12 +63,20 @@ export function AccountList({ accounts, onEdit, onDelete, loading }: AccountList
                 </div>
               </TableCell>
               <TableCell>
-                <div className="font-bold text-green-600">
+                <div
+                  className="font-bold text-green-600"
+                  suppressHydrationWarning
+                >
                   {formatCurrency(account.balance)}
                 </div>
               </TableCell>
               <TableCell>
-                <div className="text-sm text-gray-600">{formatDate(account.createdAt)}</div>
+                <div
+                  className="text-sm text-gray-600"
+                  suppressHydrationWarning
+                >
+                  {formatDate(account.createdAt)}
+                </div>
               </TableCell>
               <TableCell>
                 <div className="flex gap-2">
