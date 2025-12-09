@@ -70,13 +70,13 @@ async function bootstrap() {
   await app.listen(port, '0.0.0.0'); // Listen on all network interfaces for AWS
 
   logger.log(
-    `🚀 Application is running on: http://localhost:${port}/${apiPrefix}`,
+    `=== Application is running on: http://localhost:${port}/${apiPrefix}`,
   );
   logger.log(
-    `📚 Swagger documentation: http://localhost:${port}/${apiPrefix}/docs`,
+    `=== Swagger documentation: http://localhost:${port}/${apiPrefix}/docs`,
   );
-  logger.log(`🌍 CORS enabled for: ${corsOrigin}`);
-  logger.log(`🔧 Environment: ${process.env.NODE_ENV || 'development'}`);
+  logger.log(`=== CORS enabled for: ${corsOrigin}`);
+  logger.log(`=== Environment: ${process.env.NODE_ENV || 'development'}`);
 }
 
 void bootstrap();
