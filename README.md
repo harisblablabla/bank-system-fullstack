@@ -192,5 +192,3 @@ project-root/
 - **Swagger Docs**: `http://localhost:3000/api/docs`
 - **Frontend**: `http://localhost:3001`
 - **Production**: `http://56.68.58.194/api`
-
-**End of Project Overview**
