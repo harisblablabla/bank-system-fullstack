@@ -161,8 +161,8 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                 </svg>
                 <div>
                   <p className="text-xs font-medium text-blue-900">System Info</p>
-                  <p className="text-xs text-blue-700 mt-1">Version 1.0.0</p>
-                  <p className="text-xs text-blue-600">© 2024 Bank System</p>
+                  <p className="text-xs text-blue-700 mt-1">Version 1.0.1</p>
+                  <p className="text-xs text-blue-600">© 2025 Copywright</p>
                 </div>
               </div>
             </div>
