@@ -94,7 +94,7 @@ Calculation:
 
 ## 🏗️ Architecture
 
-### Frontend (Next.js 14)
+### Frontend (Next.js 15)
 **MVC Pattern:**
 - **Model**: TypeScript interfaces (`lib/types.ts`)
 - **View**: Client Components (`_components/*.tsx`)
@@ -119,7 +119,7 @@ Calculation:
 
 | Layer | Technology | Purpose |
 |-------|------------|---------|
-| Frontend | Next.js 14 (App Router) | Server-side rendering, routing |
+| Frontend | Next.js 15 (App Router) | Server-side rendering, routing |
 | Frontend Language | TypeScript (Strict) | Type safety |
 | Frontend Styling | Tailwind CSS | Modern, responsive UI |
 | Backend Framework | NestJS 10 | Enterprise-grade Node.js framework |
