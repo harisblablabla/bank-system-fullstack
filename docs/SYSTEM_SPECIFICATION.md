@@ -396,7 +396,4 @@ Interest Earned = 1,025,315 - 1,000,000 = Rp 25,315
   - JWT-based authentication
   - Role-based access control (RBAC)
   - User management module
-
------------------------------------------------------------
-
-**End of System Specification Document**
+    
