@@ -16,9 +16,14 @@ import {
   ApiError,
 } from './types';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL 
-  ? `${process.env.NEXT_PUBLIC_API_URL}/api` 
-  : '/api';
+const getBaseUrl = () => {
+  if (typeof window === 'undefined') {
+    const serverHost = process.env.EC2_API_URL || 'http://localhost:3000';
+    return `${serverHost}/api`;
+  }
+  
+  return '/api';
+};
 
 class ApiClient {
   private async fetchApi<T>(
@@ -26,7 +31,9 @@ class ApiClient {
     options?: RequestInit,
   ): Promise<T> {
     try {
-      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+      const API_BASE_URL = getBaseUrl()
+      const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`
+      const response = await fetch(`${API_BASE_URL}${cleanEndpoint}`, {
         ...options,
         headers: {
           'Content-Type': 'application/json',
@@ -74,7 +81,7 @@ class ApiClient {
   }
 
   async deleteCustomer(id: string): Promise<void> {
-    await fetch(`${API_BASE_URL}/customers/${id}`, {
+    await fetch(`${getBaseUrl()}/customers/${id}`, {
       method: 'DELETE',
     });
   }
@@ -109,7 +116,7 @@ class ApiClient {
   }
 
   async deleteDepositoType(id: string): Promise<void> {
-    await fetch(`${API_BASE_URL}/deposito-types/${id}`, {
+    await fetch(`${getBaseUrl()}/deposito-types/${id}`, {
       method: 'DELETE',
     });
   }
@@ -142,7 +149,7 @@ class ApiClient {
   }
 
   async deleteAccount(id: string): Promise<void> {
-    await fetch(`${API_BASE_URL}/accounts/${id}`, {
+    await fetch(`${getBaseUrl()}/accounts/${id}`, {
       method: 'DELETE',
     });
   }
